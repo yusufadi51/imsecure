@@ -1,0 +1,815 @@
+#:kivy 1.1.0
+
+<MenuUtama>:
+    name: 'menuutama'
+    MDBoxLayout:
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        orientation:'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title:"Image Encryption Platform"
+            md_bg_color: (33/255,33/255,33/255,255)
+        
+        ScrollView:
+            bar_width:0
+            MDBoxLayout:
+                orientation:'vertical'
+                adaptive_height: True
+                spacing:'40dp'
+                padding:'20dp'
+
+               
+                MDGridLayout:
+                    cols:2
+                    adaptive_height:True
+                    spacing:"15dp"
+                    GridCard:
+                        source:'images\lock.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Enkripsi Gambar'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'enkripsi'
+                    GridCard:
+                        source:'images\key.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Dekripsi Gambar'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'dekripsi'
+                    
+
+                    GridCard:
+                        source:'images\histogram.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Menu Histogram Citra'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'menuhisto'
+
+
+                    GridCard:
+                        source:'images\question.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Bantuan Pengguna'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'bantuan'
+
+<MenuHisto>:
+    name: 'menuhisto'
+    MDBoxLayout:
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        orientation:'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title:"Image Encryption Platform"
+            md_bg_color: (33/255,33/255,33/255,255)
+            left_action_items: [["home", app.goto_main_menu]]
+            
+        
+        ScrollView:
+            bar_width:0
+            MDBoxLayout:
+                orientation:'vertical'
+                adaptive_height: True
+                spacing:'40dp'
+                padding:'20dp'
+
+               
+                MDGridLayout:
+                    cols:2
+                    adaptive_height:True
+                    spacing:"15dp"
+                    GridCard:
+                        source:'images\histogram.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Histogram RGB'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'menurgb'
+                    GridCard:
+                        source:'images\histogram_gray.png'
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        text:'Histogram Grayscale'
+                        folder_size:' '
+                        on_release:
+                            root.manager.transition.direction = 'left'
+                            root.manager.current = 'menuabu'
+                    
+        
+<MenuEnkripsi>:
+    name: 'enkripsi'
+    MDBoxLayout:
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        orientation: 'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title: "Enkripsi Gambar"
+            md_bg_color: (33/255, 33/255, 33/255, 255)
+            left_action_items: [["home", app.goto_main_menu]]
+        ScrollView:
+            bar_width: 0
+            spacing: '20dp'
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: '20dp'
+                adaptive_height: True
+                spacing: '20dp'
+                MDLabel:
+                    text: 'Citra Asli'
+                    font_style: "Subtitle2"
+                MDCard:
+                    size_hint_y: None
+                    height: '250dp'
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    radius: 25
+                    padding: '15dp'
+                    spacing: '15dp'
+                    orientation: 'vertical'
+                    MDBoxLayout:
+                        
+                        spacing: '7.5dp'
+                        size_hint_y: None
+                        height: 150
+                        Image:
+                            id: img
+                            source: 'images\gambar_kosong.png'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '10dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: selected_path
+                            text: ""
+                            font_style: 'Caption'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            adaptive_height: True
+                        MDRaisedButton:
+                            markup: True
+                            size: 75, 50
+                            size_hint: None, None # <---
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            text: f"Pilih Citra [font=Icons]{md_icons['image']}[/font]"
+                            on_release: 
+                                app.file_chooser(btn_id='img')
+                # Key Section
+                MDLabel:
+                    text: 'Kunci'
+                    font_style: "Subtitle2"
+                MDCard:
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    size_hint_y: None
+                    height: '80dp'
+                    radius: 25
+                    padding: '15dp'
+                    orientation: 'vertical'
+                    
+                    MDBoxLayout:
+                        spacing: '15dp'
+                        MDTextField:
+                            id: key_a
+                            hint_text: "a"
+                            mode: "rectangle"
+                            required: True
+                        MDTextField:
+                            id: key_b
+                            hint_text: "b"
+                            mode: "rectangle"
+                            required: True
+
+                MDRaisedButton:
+                    markup: True
+                    pos_hint: {'right': 1, 'center_y': 0.5}
+                    text: f"Enkripsi [font=Icons]{md_icons['lock']}[/font]"
+                    on_release:
+                        app.btn_enkripsi()
+
+                MDLabel:
+                    text: 'Citra Terenkripsi'
+                    font_style: "Subtitle2"
+                MDCard:
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    size_hint_y: None
+                    height: '250dp'
+                    radius: 25
+                    padding: '15dp'
+                    spacing: '15dp'
+                    orientation: 'vertical'
+
+                    MDBoxLayout:
+                        spacing: '7.5dp'
+                        size_hint_y: None
+                        height: 150
+
+                        Image:
+                            id: img_encrypted
+                            source: 'images\gambar_enkripsi.png'
+
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '10dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: result_path
+                            text: ''
+                            font_style: 'Caption'
+                            adaptive_height: True
+                        MDLabel:
+                            id: process_time
+                            text: "Waktu : "
+                            font_style: 'Caption'
+                            adaptive_height: True
+                            halign:'right'
+
+
+
+
+<MenuDekripsi>:
+    MDBoxLayout:
+        orientation:'vertical'
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        spacing: '15dp'
+        MDTopAppBar:
+            title:"Dekripsi Gambar"
+            md_bg_color: (33/255,33/255,33/255,255)
+            left_action_items: [["home", app.goto_main_menu]]
+        ScrollView:
+            bar_width:0
+            spacing: '15dp'
+            MDBoxLayout:
+                orientation:'vertical'
+                padding:'20dp'
+                adaptive_height:True
+                spacing:'15dp'
+                MDLabel:
+                    text:'Citra Rahasia'
+                    font_style:"Subtitle2"
+                MDCard:
+                    size_hint_y:None
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    height:'250dp'
+                    radius:20
+                    padding:'15dp'
+                    spacing:'15dp'
+                    orientation:'vertical'
+                    MDBoxLayout:
+                        spacing: '15dp'
+                        size_hint_y: None
+                        height: 150
+                        Image:
+                            id: img
+                            source:'images\gambar_kosong.png'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '15dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: selected_path
+                            text:f""
+                            font_style:'Caption'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                        MDRaisedButton:
+                            markup:True
+                            pos_hint:{'center_x':.5,'center_y':.5}
+                            text:f"Pilih Citra [font=Icons]{md_icons['image']}[/font]"
+                            on_release: 
+                                app.file_chooser(btn_id='img')
+
+                MDLabel:
+                    text: 'Kunci'
+                    font_style: "Subtitle2"
+                MDCard:
+                    size_hint_y: None
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    height: '80dp'
+                    radius: 25
+                    padding: '10dp'
+                    orientation: 'vertical'
+                    
+                    MDBoxLayout:
+                        spacing: '15dp'
+                        MDTextField:
+                            id: key_a
+                            hint_text: "a"
+                            mode: "rectangle"
+                            required: True
+                        MDTextField:
+                            id: key_b
+                            hint_text: "b"
+                            mode: "rectangle"
+                            required: True
+                MDRaisedButton:
+                    markup:True
+                    pos_hint: {'right': 1, 'center_y': 0.5}
+                    text:f"Dekripsi [font=Icons]{md_icons['lock-open']}[/font]"
+                    on_release:
+                        app.btn_dekripsi()
+
+                MDLabel:
+                    text:'Citra Asli'
+                    font_style:"Subtitle2"
+                MDCard:
+                    size_hint_y:None
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    height:'250dp'
+                    radius:25
+                    padding:'15dp'
+                    spacing:'15dp'
+                    orientation:'vertical'
+                    MDBoxLayout:
+                        spacing:'15dp'
+                        Image:
+                            id: img_decrypted
+                            source:'images\gambar_dekripsi.png'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '15dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: result_path
+                            text:''
+                            font_style:'Caption'
+                            adaptive_height:True
+                            halign:'left'
+                        MDLabel:
+                            id: process_time
+                            text: "Waktu : "
+                            font_style: 'Caption'
+                            adaptive_height: True
+                            halign:'right'
+<BantuanPengguna>:
+    name: 'bantuan'
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title: "Bantuan Pengguna"
+            md_bg_color: (33/255, 33/255, 33/255, 255)
+            left_action_items: [["home", app.goto_main_menu]]
+            
+        ScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: '10dp'
+                padding: '20dp'
+                size_hint_y: None
+                height: self.minimum_height
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: 'Tata Cara Enkripsi Citra:'
+                        font_style: "H6"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "1. Buka menu enkripsi pada aplikasi."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Klik tombol 'Pilih Citra' dan pilih citra dengan ekstensi .jpg, .png, atau .bmp."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "2. Masukkan kunci rahasia sesuai ketentuan:"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Kunci 'a' (0.1-0.9), kunci 'b' (0.1-0.9)"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "3. Klik tombol 'Enkripsi' untuk mulai proses enkripsi."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Jika berhasil, muncul dialog 'Enkripsi berhasil' dan hasil enkripsi ditampilkan pada card di bagian bawah."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: 'Tata Cara Dekripsi Citra:'
+                        font_style: "H6"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "1. Buka menu dekripsi pada aplikasi."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Klik tombol 'Pilih Citra' dan pilih citra terenkripsi dengan ekstensi .png."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "2. Masukkan kunci-kunci yang digunakan saat proses enkripsi."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "3. Klik tombol 'Dekripsi' untuk memulai proses dekripsi citra."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Jika kunci rahasia cocok dan proses dekripsi berhasil, maka hasil dekripsi citra akan ditampilkan dalam bentuk kartu."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: "Pastikan untuk membuka menu enkripsi atau dekripsi pada aplikasi dan ikuti langkah-langkah yang disebutkan di atas."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    
+<TentangAplikasi>:
+    name: 'tentang'
+    MDBoxLayout:
+        orientation: 'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title: "Tentang Aplikasi"
+            md_bg_color: (33/255, 33/255, 33/255, 255)
+            left_action_items: [["home", app.goto_main_menu]]
+            
+        ScrollView:
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: '20dp'
+                padding: '20dp'
+                size_hint_y: None
+                height: self.minimum_height
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: "Aplikasi Enkripsi dan Dekripsi Citra"
+                        font_style: "H6"
+                        theme_text_color: "Secondary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Versi: 1.0.0"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: "Tujuan: Aplikasi ini bertujuan untuk memberikan pengguna kemampuan untuk melakukan enkripsi dan dekripsi citra dengan menggunakan kunci rahasia. Hal ini membantu meningkatkan keamanan citra yang sensitif."
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: "Fitur:"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "- Enkripsi citra menggunakan algoritma kriptografi yang kuat."
+                        font_style: "Body2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "- Dekripsi citra menggunakan kunci yang sesuai dengan proses enkripsi."
+                        font_style: "Body2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "- Dukungan untuk citra dengan format .jpg, .png, dan .bmp."
+                        font_style: "Body2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                MDBoxLayout:
+                    orientation: 'vertical'
+                    spacing: '10dp'
+                    padding: '10dp'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    MDLabel:
+                        text: "Pengembang:"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "- Fakhri Rahmat Rizqi"
+                        font_style: "Body2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                    MDLabel:
+                        text: "Kontak: fakhrirahmatr@gmail.com"
+                        font_style: "Subtitle2"
+                        theme_text_color: "Primary"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+
+<GridCard@MDCard>:
+    ripple_behavior:True
+    orientation:'vertical'
+    source:''
+    radius:25
+    folder_size:''
+    text:''
+    padding:'20dp'
+    spacing:'20dp'
+    size_hint_y:None
+    height:'150dp'
+    Image:
+        source:root.source
+    MDBoxLayout:
+        orientation:'vertical'
+        adaptive_height:True
+        MDLabel:
+            text:root.folder_size
+            adaptive_height:True
+            halign:'center'
+            font_style:'Caption'
+        MDLabel:
+            text:root.text
+            adaptive_height:True
+            halign:'center'
+
+
+<MenuRgb>:
+    name: 'menurgb'
+    MDBoxLayout:
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        orientation: 'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title: "Menu Histogram RGB"
+            md_bg_color: (33/255, 33/255, 33/255, 255)
+            left_action_items: [["home", app.goto_main_menu]]
+            
+        ScrollView:
+            bar_width: 0
+            spacing: '20dp'
+            MDBoxLayout:
+                
+                orientation: 'vertical'
+                padding: '20dp'
+                adaptive_height: True
+                spacing: '20dp'
+                MDLabel:
+                    text: 'Citra Asli'
+                    font_style: "Subtitle2"
+                MDCard:
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    size_hint_y: None
+                    height: '250dp'
+                    radius: 25
+                    padding: '15dp'
+                    spacing: '15dp'
+                    orientation: 'vertical'
+                    MDBoxLayout:
+                        spacing: '7.5dp'
+                        size_hint_y: None
+                        height: 150
+                        Image:
+                            id: gambar_utm
+                            source: 'images\gambar_kosong.png'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '10dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: selected_path_utm
+                            text: ""
+                            font_style: 'Caption'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            adaptive_height: True
+                        MDRaisedButton:
+                            markup: True
+                            size: 75, 50
+                            size_hint: None, None
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            text: f"Pilih Citra [font=Icons]{md_icons['image']}[/font]"
+                            on_release: 
+                                app.file_chooser(btn_id='gambar_utm')
+
+                MDRaisedButton:
+                    markup: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    text: f"Tampilkan Histogram [font=Icons]{md_icons['lock']}[/font]"
+                    on_release:
+                        app.btn_rgb()
+
+                MDLabel:
+                    text: 'Histogram Citra'
+                    font_style: "Subtitle2"
+                
+                # Tambahkan Image widget untuk menampilkan gambar asli
+                Image:
+                    id: gambar_asli
+                    source: 'images/histogram'  # Isi dengan sumber gambar asli setelah dipilih
+
+                GridCard:
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    id: histo
+                    size_hint_y: None
+                    height: "225dp"
+                    source: 'images/histogram.png'
+                    text: 'Histogram'
+                    folder_size: ' '
+
+                MDGridLayout:
+                    
+                    cols: 2
+                    adaptive_height: True
+                    spacing: "15dp"
+                    MDGridLayout:
+                        cols: 3
+                        adaptive_height: True
+                        spacing: "10dp"
+                        GridCard:
+                            md_bg_color: (37/255, 150/255, 190/255, 255)
+                            id: gambar_red
+                            size_hint_y: None
+                            height: "225dp"
+                            source: 'images/histogram.png'
+                            text: 'Red'
+                            folder_size: ' '
+                        GridCard:
+                            md_bg_color: (37/255, 150/255, 190/255, 255)
+                            id: gambar_green
+                            size_hint_y: None
+                            height: "225dp"
+                            source: 'images/histogram.png'
+                            text: 'Green'
+                            folder_size: ' '
+                        GridCard:
+                            md_bg_color: (37/255, 150/255, 190/255, 255)
+                            id: gambar_blue
+                            size_hint_y: None
+                            height: "225dp"
+                            source: 'images/histogram.png'
+                            text: 'Blue'
+                            folder_size: ' '
+
+
+
+
+<MenuAbu>:
+    name: 'menuabu'
+    MDBoxLayout:
+        md_bg_color: (0.047, 0.208, 0.416, 1)
+        orientation: 'vertical'
+        spacing: '15dp'
+        MDTopAppBar:
+            title: "Menu Grayscale"
+            md_bg_color: (33/255, 33/255, 33/255, 255)
+            left_action_items: [["home", app.goto_main_menu]]
+            
+        ScrollView:
+            bar_width: 0
+            spacing: '20dp'
+            MDBoxLayout:
+                orientation: 'vertical'
+                padding: '20dp'
+                adaptive_height: True
+                spacing: '20dp'
+                MDLabel:
+                    text: 'Citra Asli'
+                    font_style: "Subtitle2"
+                MDCard:
+                    md_bg_color: (37/255, 150/255, 190/255, 255)
+                    size_hint_y: None
+                    height: '250dp'
+                    radius: 25
+                    padding: '15dp'
+                    spacing: '15dp'
+                    orientation: 'vertical'
+                    MDBoxLayout:
+                        spacing: '7.5dp'
+                        size_hint_y: None
+                        height: 150
+                        Image:
+                            id: gambar_utm
+                            source: 'images\gambar_kosong.png'
+                    MDBoxLayout:
+                        orientation: 'horizontal'
+                        spacing: '10dp'
+                        size_hint_y: None
+                        height: dp(50) 
+                        MDLabel:
+                            id: selected_path_utm
+                            text: ""
+                            font_style: 'Caption'
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            adaptive_height: True
+                        MDRaisedButton:
+                            markup: True
+                            size: 75, 50
+                            size_hint: None, None
+                            pos_hint: {'center_x': .5, 'center_y': .5}
+                            text: f"Pilih Citra [font=Icons]{md_icons['image']}[/font]"
+                            on_release: 
+                                app.file_chooser(btn_id='gambar_utm')
+
+                MDRaisedButton:
+                    markup: True
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    text: f"Tampilkan Gambar Grayscale [font=Icons][/font]"
+                    on_release:
+                        app.btn_abu()
+
+                MDLabel:
+                    text: 'Gambar Grayscale'
+                    font_style: "Subtitle2"
+                
+                # Tambahkan Image widget untuk menampilkan gambar asli
+                Image:
+                    id: gambar_asli
+                    source: 'images/histogram'  # Isi dengan sumber gambar asli setelah dipilih
+
+                MDGridLayout:
+                    cols: 3
+                    adaptive_height: True
+                    spacing: "10dp"
+                    
+                    GridCard:
+                        md_bg_color: (37/255, 150/255, 190/255, 255)
+                        id: histoabu
+                        size_hint_y: None
+                        height: "225dp"
+                        source: 'images/histogram.png'
+                        text: 'Histogram Grayscale'
+                        folder_size: ' '
+
+                
